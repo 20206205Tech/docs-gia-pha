@@ -1,130 +1,149 @@
-\documentclass{article}
-\usepackage{graphicx}
-\usepackage{float}
+\documentclass[notheorems,hyperref={bookmarks=true},usepdftitle=false]{beamer}
+
+\hypersetup{
+pdfpagemode=FullScreen,
+pdftitle={Xây dựng ứng dụng hỗ trợ tư vấn pháp luật sử dụng công nghệ trí tuệ nhân tạo},
+pdfauthor={Vũ Văn Nghĩa - 20206205}
+}
 \usepackage[utf8]{vietnam}
-\usepackage{lipsum}
-\usepackage{tikz}
-\usepackage{tikzpagenodes}
-\usetikzlibrary{calc}
-\usepackage[a4paper, top=2cm, bottom=2cm, left=3.5cm, right=2.5cm]{geometry}
+\usepackage{mdframed}
+% \usepackage[english]{babel}
+\usepackage{ulem}
+\usepackage{pifont}
+\usepackage[mathscr]{eucal}
+\usepackage{amsfonts,amsmath, amsthm, amssymb,amsxtra,latexsym,amscd,graphics,graphpap}
+\usepackage{rotating}
+\usepackage{graphicx}
+\usepackage{amsbsy}
+\usepackage{epsfig}
+% \usepackage{natbib}
+\usepackage[numbers]{natbib}
+\renewcommand{\bibsection}{}
+\usepackage{cases}
+
 \usepackage{pdfpages}
-\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{subfigure}
+\usepackage{multimedia}
+\usepackage{boxedminipage}
+\usepackage{tikz}
+\usepackage{nicefrac}
+\setbeamertemplate{theorems}[numbered]
+\setbeamertemplate{caption}[numbered]
+\usetheme{Boadilla}
+% \usetheme{CambridgeUS}
+
+\usecolortheme{rose}
+\usefonttheme[onlylarge]{structurebold}
+\usefonttheme{professionalfonts}
+\setbeamercolor{title}{fg=red!80!black,bg=blue!20!white}
+\setbeamertemplate{section in head/foot shaded}[default][20]
+\setbeamertemplate{subsection in head/foot shaded}[default][20]
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamerfont{small}{size=\small}
+\setbeamerfont{footnote}{size=\footnotesize}
+\setbeamerfont{script}{size=\scriptsize}
+\setbeamerfont{tiny}{size=\tiny}
+
+\theoremstyle{plain}
+
+\mode<presentation>
+\setbeamertemplate{navigation symbols}{}
+
+\usepackage{wrapfig}
+\usepackage{multicol}
+
+\title[{\makebox[.15\paperwidth]{Khoa Toán - Tin}}]{Xây dựng ứng dụng hỗ trợ tư vấn pháp luật \\ sử dụng công nghệ trí tuệ nhân tạo}
+
+\author[\href{https://20206205.tech}{Vũ Văn Nghĩa - 20206205}]{
+Khoa Toán - Tin \\
+Đồ án tốt nghiệp \\[0.2cm]
+\begin{tabular}{ll}
+Giảng viên hướng dẫn: & TS. Trần Anh Tú \\
+Sinh viên thực hiện: & Vũ Văn Nghĩa \\
+Mã số sinh viên: & 20206205 \\
+Lớp: & Toán Tin 02 - K65
+\end{tabular}
+}
+% \date{Hà Nội, \today}
+% \date{Hà Nội, 07/2026}
+\date{\href{https://20206205tech.github.io/docs-slide-more}{Hà Nội, 07/2026}}
+
+\renewcommand{\sfdefault}{cmss}
+\renewcommand{\rmdefault}{cmr}
+\renewcommand{\ttdefault}{cmtt}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
+\numberwithin{table}{section}
+\renewcommand{\thetable}{\arabic{section}.\arabic{table}}
+\renewcommand{\figurename}{Hình}
+\renewcommand{\tablename}{Bảng}
+\usepackage{array}
+\usepackage{ragged2e}
+\justifying
+\usepackage{blindtext}
+\renewcommand{\baselinestretch}{1.15}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+\newtheorem{prop}{Proposition}
 \usepackage{amsmath}
-\usepackage{enumitem} % Gói hỗ trợ tùy chỉnh danh sách
-\usepackage{xcolor}
-\usepackage{tcolorbox} % Gói hỗ trợ tùy chỉnh khung
-\usepackage{makecell} % Gói hỗ trợ tạo ô trong bảng
-\usepackage{longtable} % Gói hỗ trợ bảng dài nhiều trang
-% \usetikzlibrary{arrows.meta}
-% \usepackage{rotating} % Bắt buộc phải có
-% \usepackage{pdflscape} % Khuyên dùng pdflscape thay vì lscape để PDF xoay đúng chiều khi xem trên máy tính
 
-\setlength{\parindent}{0pt} % Không thụt lề
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}{Corollary}
+\newtheorem{hypothesis}{Hypothesis}
 
-\definecolor{RedHUST}{RGB}{205,5,5}
-% \setlist{format={\color{RedHUST}\bfseries}} % Đặt màu cho danh sách
+\renewcommand{\thedefinition}{\arabic{section}.\arabic{definition}}
+\providecommand{\thelemma}{}
+\renewcommand{\thelemma}{\arabic{section}.\arabic{lemma}}
+\renewcommand{\thetheorem}{\arabic{section}.\arabic{theorem}}
 
-% Định nghĩa lại lệnh \lipsum gốc để tự động bọc trong màu RedHUST
-\let\oldlipsum\lipsum
-\renewcommand{\lipsum}[1][1-7]{{\color{RedHUST}\oldlipsum[#1]}}
+\usepackage{esvect}
+\usepackage{booktabs}
+\usepackage{multirow}
+
+\usepackage{pgfpages}
+\usepackage{makecell}
+
+% \hypersetup{
+% pdfpagelayout=TwoPageRight, % Chuyển sang trang bên phải khi nhấp chuột trái hoặc phải
+% pdfpagemode=FullScreen, % Mở tài liệu ở chế độ toàn màn hình khi bắt đầu
+% }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \definecolor{BlueSAMI}{RGB}{1,90,143}
-\setlist{format={\color{BlueSAMI}\bfseries}} % Đặt màu cho danh sách
-
-% Định nghĩa môi trường block
-\newenvironment{block}[1]
-{\begin{tcolorbox}[%
-colback=white, % Màu nền nội dung
-colframe=BlueSAMI, % Màu khung
-arc=3mm, % Góc bo tròn
-title={\textbf{#1}}, % Tiêu đề, in đậm
-colbacktitle=BlueSAMI, % Màu nền tiêu đề
-coltitle=white, % Màu chữ tiêu đề
-boxrule=2pt, % Độ dày của khung
-before upper={\tcbtitle\vskip0pt\par}
-]
-\begin{minipage}{\textwidth}}
-{\end{minipage}
-\end{tcolorbox}}
-
-\setlength{\headheight}{12.42429pt} % bug header foooter
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\lhead{Đồ án tốt nghiệp}
-\rhead{Vũ Văn Nghĩa - 20206205}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
-
-% Căn giữa tiêu đề mục lục
-\makeatletter
-\renewcommand{\tableofcontents}{
-\begin{center}
-\section*{\contentsname}
-\end{center}
-\@starttoc{toc}
-}
-\makeatother
-
-\numberwithin{figure}{section} % Đặt số ảnh theo section
-% Căn giữa tiêu đề danh sách hình ảnh
-\makeatletter
-\renewcommand{\listoffigures}{
-\begin{center}
-\section*{\listfigurename}
-\end{center}
-\@starttoc{lof}
-}
-\makeatother
-
-% \usepackage{microtype}
-% \usepackage{blindtext}
-
-% \usepackage{etoolbox}
-% \pretocmd{\section}{\clearpage}{}{}
-\usepackage{csquotes}
-
-% Tự động thêm chữ "CHƯƠNG" vào trước số section và định dạng lại các đề mục con
-\usepackage{titlesec}
-\renewcommand{\thesection}{CHƯƠNG \arabic{section}}
-\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
-\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
-\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
-\renewcommand{\thetable}{\arabic{section}.\arabic{table}}
-
-% Định dạng hiển thị tiêu đề Chương (section) trong văn bản
-\titleformat{\section}[block]
-{\normalfont\Large\bfseries\centering} % Căn giữa, chữ in đậm, cỡ lớn
-{\thesection.} % Nhãn hiển thị (ví dụ: CHƯƠNG 1.)
-{1em} % Khoảng cách giữa nhãn và tiêu đề chương
-{}
-
-% Cấu hình Mục lục (TOC) tránh lỗi tràn lề và đè chữ khi thêm chữ "CHƯƠNG" viết hoa
-\usepackage[titles]{tocloft}
-\setlength{\cftsecnumwidth}{7.0em} % Độ rộng cột số hiệu Section (đủ chỗ cho CHƯƠNG X.)
-\setlength{\cftsubsecindent}{7.0em} % Thụt lề Subsection thẳng hàng với tiêu đề Section (7.0em)
-\setlength{\cftsubsecnumwidth}{3.0em} % Độ rộng cột số hiệu Subsection
-\setlength{\cftsubsubsecindent}{10.0em} % Thụt lề Subsubsection (7.0 + 3.0)
-\setlength{\cftsubsubsecnumwidth}{3.5em} % Độ rộng cột số hiệu Subsubsection
 
 \newif\ifdev
-% Chọn 1 trong 2 dòng dưới đây để bật/tắt chế độ:
-\devtrue % BẬT chế độ Dev
-% \devfalse % TẮT chế độ Dev (Production)
+\devtrue
+\devfalse
 
 \ifdev
-\pagecolor{black} % Thiết lập nền toàn bộ trang PDF thành màu đen
-\color{white} % Thiết lập màu chữ mặc định toàn trang là trắng
+
+\setbeamercolor{background canvas}{bg=black} % Thiết lập nền toàn bộ slide thành màu đen
+\setbeamercolor{normal text}{fg=white} % Thiết lập màu chữ mặc định là trắng
+
+% Bật chức năng hiển thị ghi chú
+% \setbeameroption{show notes}
+\setbeameroption{show notes on second screen=right}
+% \setbeameroption{show only notes}
+% \setbeameroption{hide notes}
+
+% Thiết lập nền đen và chữ trắng cho toàn bộ trang ghi chú
+\setbeamercolor{note page}{bg=black, fg=white}
+% Thiết lập màu cho thanh tiêu đề của trang ghi chú (Note header)
+\setbeamercolor{note title}{bg=black!90!white, fg=white}
+\setbeamercolor{note date}{parent=note title}
+
 \fi
-
 \begin{document}
+% \begin{footnotesize}
 
-% \input{doc}
-% \input{index}
+\input{doc}
 
 \ifdev
-\input{doc}
-\else
-\input{index}
+\input{dev}
 \fi
 
 \end{document}

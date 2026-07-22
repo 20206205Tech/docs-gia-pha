@@ -46,12 +46,12 @@ repos:
       #   files: ^python/sync_json_to_md\.py$
       #   pass_filenames: false
 
-      - id: sync-abbreviations-to-tex
-        name: Sync Abbreviations to LaTeX
-        entry: python python/abbr.py
-        language: python
-        files: ^python/abbr\.py$
-        pass_filenames: false
+      # - id: sync-abbreviations-to-tex
+      #   name: Sync Abbreviations to LaTeX
+      #   entry: python python/abbr.py
+      #   language: python
+      #   files: ^python/abbr\.py$
+      #   pass_filenames: false
 
       # - id: format-markdown-punctuation
       #   name: Format Markdown Punctuation
@@ -94,3 +94,11 @@ repos:
         language: python
         files: \.tex$
         pass_filenames: false
+
+      # - id: generate-audio-from-latex-notes
+      #   name: Generate Audio from LaTeX Notes
+      #   entry: python python/audio.py
+      #   language: python
+      #   # files: \.tex$
+      #   pass_filenames: false
+      #   additional_dependencies: ["edge-tts"]

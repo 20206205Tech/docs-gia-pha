@@ -1,20 +1,49 @@
 import json
+import mimetypes
 import os
 from datetime import datetime
+from pathlib import Path
 
 import pytz
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaFileUpload
 
-# ID thư mục Google Drive bạn đã cung cấp
-GOOGLE_DRIVE_FOLDER_ID = "1pEg4GjFHZBeVbFxQ1BkmiGdt0HwnOYE1"
+# Mặc định (bản Prod), nếu có biến môi trường truyền từ GitHub Actions thì sẽ lấy giá trị đó
+GOOGLE_DRIVE_FOLDER_ID = os.environ.get(
+    "DRIVE_FOLDER_ID", "1TbMNTUkGjA3EUbt-8BYMx2oDWkntDqXM"
+)
 SCOPES = ["https://www.googleapis.com/auth/drive.file"]
 
-# Đường dẫn tới file PDF (từ thư mục python/ trỏ ngược ra thư mục latex/)
-PDF_LOCAL_PATH = os.path.join(
-    os.path.dirname(__file__), "..", "latex", "VuVanNghia-20206205.pdf"
-)
+# Lấy tên file động từ biến môi trường (mặc định là bản chính thức)
+PDF_FILE_NAME = os.environ.get("PDF_FILE_NAME", "VuVanNghia-20206205.pdf")
+
+PROJECT_DIR = Path(__file__).resolve().parents[1]
+
+
+def get_upload_file_info():
+    """Lấy đường dẫn, tên file gốc, và mimetype cần upload."""
+    local_file_path = os.environ.get("LOCAL_FILE_PATH")
+
+    if local_file_path:
+        upload_path = Path(local_file_path)
+
+        if not upload_path.is_absolute():
+            upload_path = PROJECT_DIR / upload_path
+
+        drive_file_name = os.environ.get("DRIVE_FILE_NAME", upload_path.name)
+    else:
+        upload_path = PROJECT_DIR / "latex" / PDF_FILE_NAME
+        drive_file_name = os.environ.get("DRIVE_FILE_NAME", PDF_FILE_NAME)
+
+    mime_type = os.environ.get("MIME_TYPE")
+
+    if not mime_type:
+        mime_type = (
+            mimetypes.guess_type(upload_path.name)[0] or "application/octet-stream"
+        )
+
+    return upload_path, drive_file_name, mime_type
 
 
 def get_hanoi_time(format_str="%d-%m-%Y_%H-%M-%S"):
@@ -36,23 +65,29 @@ def get_drive_service():
 
 
 def main():
-    if not os.path.exists(PDF_LOCAL_PATH):
-        print(f"❌ Không tìm thấy file PDF tại: {PDF_LOCAL_PATH}")
-        print("Vui lòng đảm bảo bạn đã biên dịch LaTeX thành công.")
+    upload_path, drive_file_name, mime_type = get_upload_file_info()
+
+    if not upload_path.exists():
+        print(f"❌ Không tìm thấy file tại: {upload_path}")
+        print("Vui lòng đảm bảo file đã được tạo trước khi upload.")
         return
 
     print("🔑 Đang xác thực Google Drive...")
     service = get_drive_service()
 
-    # Tạo tên file mới có kèm thời gian
+    # Tạo tên file mới có kèm thời gian.
     time_suffix = get_hanoi_time()
-    new_file_name = f"VuVanNghia-20206205_{time_suffix}.pdf"
+    file_stem = Path(drive_file_name).stem
+    file_suffix = Path(drive_file_name).suffix
+    new_file_name = f"{file_stem}_{time_suffix}{file_suffix}"
 
-    print(f"🚀 Đang tải file lên với tên: {new_file_name}")
+    print(
+        f"🚀 Đang tải file lên thư mục ID [{GOOGLE_DRIVE_FOLDER_ID}] với tên: {new_file_name}"
+    )
 
     file_metadata = {"name": new_file_name, "parents": [GOOGLE_DRIVE_FOLDER_ID]}
 
-    media = MediaFileUpload(PDF_LOCAL_PATH, mimetype="application/pdf", resumable=True)
+    media = MediaFileUpload(str(upload_path), mimetype=mime_type, resumable=True)
 
     try:
         file = (
