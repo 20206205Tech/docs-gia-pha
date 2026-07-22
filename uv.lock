@@ -302,7 +302,7 @@ wheels = [
 ]
 
 [[package]]
-name = "docs-latex"
+name = "docs-gia-pha"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
